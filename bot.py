@@ -11,7 +11,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-TOKEN = "8409337611:AAEyig2Zx1zURjyHwD5D9hTyolEykZAp38Y"  # <-- Убедитесь, что здесь ваш настоящий токен
+TOKEN = ""
 
 
 QUIZ_DATA = {
