@@ -4,18 +4,18 @@ from collections import Counter
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
 
-# --- Настройка логирования, чтобы видеть ошибки ---
+
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
 )
 logger = logging.getLogger(__name__)
 
-# --- ВАЖНО: Вставьте сюда ваш токен, полученный от BotFather ---
+
 TOKEN = "8409337611:AAEyig2Zx1zURjyHwD5D9hTyolEykZAp38Y"  # <-- Убедитесь, что здесь ваш настоящий токен
 
-# ... (QUIZ_DATA и RESULTS без изменений) ...
+
 QUIZ_DATA = {
-    1: { # Этот блок почти без изменений, т.к. текст помещался
+    1: {
         "question": "Что ты сегодня ел на завтрак?",
         "answers": {
             "Кофе. Много кофе.": "Вечный двигатель",
@@ -60,7 +60,7 @@ QUIZ_DATA = {
             "Пойти на лекцию и спорить до ночи.": "Мастер Каверзных Вопросов"
         }
     },
-    6: { # Этот блок был на скриншоте
+    6: {
         "question": "Что бы ты сделал, если бы в сутках было 25 часов?",
         "answers": {
             "Спал(а) бы на час дольше.": "Спящая красавица",
@@ -126,12 +126,12 @@ RESULTS = {
     "Мастер Каверзных Вопросов": "Твое любимое развлечение - поставить лектора в тупик вопросом, начинающимся со слов 'А что, если...'. Обожаешь споры ( особенно грибов) и здоровую (и не очень) дискуссию."
 }
 
-# --- ДОБАВЛЕНО: Словарь для кеширования изображений в памяти ---
+
 IMAGE_CACHE = {}
 
 
 def preload_images():
-    """Загружает все изображения из папки images в оперативную память при старте."""
+
     logger.info("Начинаю предварительную загрузку изображений в кеш...")
     for persona in RESULTS:
         try:
@@ -230,7 +230,7 @@ async def show_results(update: Update, context: ContextTypes.DEFAULT_TYPE):
             parse_mode='Markdown'
         )
 
-        # --- ИЗМЕНЕНО: Отправляем фото из кеша, а не с диска ---
+
         if final_persona in IMAGE_CACHE:
             await context.bot.send_photo(
                 chat_id=update.effective_chat.id,
@@ -258,8 +258,7 @@ async def show_results(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 def main() -> None:
-    """Запуск бота."""
-    # --- ДОБАВЛЕНО: Загружаем картинки в память перед запуском ---
+
     preload_images()
 
     application = Application.builder().token(TOKEN).build()
